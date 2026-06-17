@@ -4,35 +4,35 @@ body{
     margin:0;
     padding:20px
 }
-header{
+.header{
     text-align:center;background:#fff;
     padding:25px;
     border-radius:20px;
     box-shadow:0 4px 15px rgba(0,0,0,.1);
     margin-bottom:20px
 }
-logo{
+.logo{
     width:180px;
     max-width:90%
 }
-header h1{
+.header h1{
     color:#1f1f1f
 }
-toolbar{
+.toolbar{
     display:flex;
     flex-direction:column;
     gap:15px;
     margin-bottom:20px
 }
-buscador{
+#buscador{
     padding:14px;
     border:none;
     border-radius:12px
 }
-filtros{
+.filtros{
     text-align:center
 }
-filtros button{
+.filtros button{
     margin:4px;
     padding:10px 14px;
     border:none;
@@ -41,74 +41,75 @@ filtros button{
     color:#fff;
     cursor:pointer
 }
-filtros button:hover{
+.filtros button:hover{
     background:#d4af37;
     color:#000
 }
-container{
+.container{
     display:grid;
     grid-template-columns:1fr 300px;
     gap:20px
 }
-productos{
+#productos{
     display:grid;
     grid-template-columns:repeat(auto-fill,minmax(250px,1fr));
     gap:20px
 }
-card{
+.card{
     background:#fff;
     border-radius:18px;
     overflow:hidden;
     box-shadow:0 4px 15px rgba(0,0,0,.08)
 }
-card img{
+.card img{
     width:100%;
     height:260px;
     object-fit:cover
 }
-info{
+.info{
     padding:15px
 }
-precio{
+.precio{
     font-size:22px;
     font-weight:bold;
     color:#d4af37
 }
-estado{
+.estado{
     display:inline-block;
     padding:6px 12px;
     border-radius:20px;
     font-weight:bold;font-size:.8rem
 }
-disponible{
+.disponible{
     background:#d4edda;
     color:#155724
 }
-ultimas{
+.ultimas{
     background:#fff3cd;
     color:#856404
 }
-agotado{
+.agotado{
     background:#f8d7da;
     color:#721c24
 }
-stock{
+.stock{
     color:#777;
     margin-top:8px
 }
-controles{
+.controles{
     display:flex;
     justify-content:center;
     gap:10px;
     align-items:center;
     margin-top:10px
 }
-controles button,.comprar{
+.controles button,
+.comprar{
     border:none;
     border-radius:8px;
     padding:8px 12px
 }
-comprar{
+.comprar{
     display:block;
     text-align:center;
     text-decoration:none;
@@ -116,7 +117,7 @@ comprar{
     color:#fff;
     margin-top:10px
 }
-pedido{
+.pedido{
     background:#fff;
     padding:20px;
     border-radius:18px;
@@ -124,7 +125,7 @@ pedido{
     top:20px;
     height:fit-content
 }
-btn-wsp{
+.btn-wsp{
     display:block;
     text-align:center;
     background:#25D366;
