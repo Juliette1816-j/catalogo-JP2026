@@ -1,52 +1,111 @@
-"https://opensheet.elk.sh/1Cd2_fF394dI7IviGzBTbcozgRTTu6cHo3I8kqyBU7xA/MEDIAS_STOCK";
+const API = "https://opensheet.elk.sh/1Cd2_fF394dI7IviGzBTbcozgRTTu6cHo3I8kqyBU7xA/MEDIAS_STOCK";
+
+const LOGO_MEDIAS = "https://lh3.googleusercontent.com/d/19Tqu5sfgN26MqUu3A3CVpaohOPzivXHW";
+const LOGO_JOYERIA = "https://lh3.googleusercontent.com/d/1rSFjBpnOpUPOSrIVZ1BkjcBXWUokA_b4";
 
 let productosGlobal = [];
+let pedido = {};
 
 fetch(API)
 .then(r => r.json())
 .then(datos => {
-
     productosGlobal = datos;
-
     mostrarProductos(datos);
-
 });
 
 function cambiarLogo(categoria){
 
-    const logo =
-    document.getElementById("logoCategoria");
+    const logo = document.getElementById("logoCategoria");
 
-    if(
-        categoria === "Mujer" ||
-    ){
-        logo.src = "logo-rosa.png";
+    if(categoria === "Joyeria"){
+        logo.src = LOGO_JOYERIA;
+    }else{
+        logo.src = LOGO_MEDIAS;
     }
-    else{
-        logo.src = "logo-negro.png";
-    }
-    else{
-        logo.src = "logo-azul-rosa.png";
-    }
-
 }
+
 function filtrar(categoria){
 
     cambiarLogo(categoria);
 
     if(categoria === "Todos"){
-
         mostrarProductos(productosGlobal);
         return;
     }
 
-    const filtrados =
-    productosGlobal.filter(
-        p => p.CATEGORIA_VISUAL === categoria
+    const filtrados = productosGlobal.filter(p =>
+        (p.CATEGORIA || "")
+        .toLowerCase()
+        .includes(categoria.toLowerCase())
     );
 
     mostrarProductos(filtrados);
 }
+
+document.addEventListener("input", (e) => {
+
+    if(e.target.id === "buscador"){
+
+        const texto =
+        e.target.value.toLowerCase();
+
+        const filtrados =
+        productosGlobal.filter(p =>
+            (p.PRODUCTO || "")
+            .toLowerCase()
+            .includes(texto)
+        );
+
+        mostrarProductos(filtrados);
+    }
+
+});
+
+function agregar(nombre){
+
+    if(!pedido[nombre]){
+        pedido[nombre] = 0;
+    }
+
+    pedido[nombre]++;
+
+    actualizarPedido();
+}
+
+function actualizarPedido(){
+
+    const lista =
+    document.getElementById("listaPedido");
+
+    lista.innerHTML = "";
+
+    let totalItems = 0;
+
+    let mensaje =
+    "Hola, deseo pedir:%0A";
+
+    Object.entries(pedido).forEach(([nombre,cantidad]) => {
+
+        totalItems += cantidad;
+
+        lista.innerHTML += `
+        <li>
+            ${nombre} x${cantidad}
+        </li>`;
+
+        mensaje +=
+        `${nombre} x${cantidad}%0A`;
+
+    });
+
+    document.getElementById("totalItems")
+    .textContent = totalItems;
+
+    document.getElementById("btnWhatsapp")
+    .href =
+    `https://wa.me/573138368430?text=${mensaje}`;
+}
+
 function mostrarProductos(datos){
 
     const contenedor =
@@ -65,47 +124,69 @@ function mostrarProductos(datos){
         imagen.match(/id=([^&]+)/);
 
         if(match){
-
             imagen =
             `https://lh3.googleusercontent.com/d/${match[1]}`;
         }
 
-        let estado = "";
+        const stock =
+        Number(p.STOCK || 0);
 
-        if(Number(p.STOCK) === 0){
-            estado = "🔴 Agotado";
-        }
-        else if(Number(p.STOCK) <= 5){
-            estado = "🟡 Últimas unidades";
-        }
-        else{
-            estado = "🟢 Disponible";
+        let claseEstado =
+        "disponible";
+
+        let textoEstado =
+        "DISPONIBLE";
+
+        if(stock === 0){
+
+            claseEstado =
+            "agotado";
+
+            textoEstado =
+            "AGOTADO";
+
+        }else if(stock <= 5){
+
+            claseEstado =
+            "ultimas";
+
+            textoEstado =
+            `ÚLTIMAS ${stock}`;
+
         }
 
         contenedor.innerHTML += `
 
         <div class="card">
 
-            <img src="${imagen}">
+            <img
+                src="${imagen}"
+                alt="${p.PRODUCTO}">
 
             <div class="info">
 
-                <h3>${p.PRODUCTO}</h3>
+                <h3>
+                    ${p.PRODUCTO}
+                </h3>
 
-                <p>${p.CATEGORIA}</p>
+                <div class="precio">
+                    ${p["VALOR VENTA"] || ""}
+                </div>
 
-                <p class="precio">
-                    ${p["VALOR VENTA"]}
-                </p>
+                <div class="estado ${claseEstado}">
+                    ${textoEstado}
+                </div>
 
-                <p>${estado}</p>
+                <div class="stock">
+                    Inventario: ${stock}
+                </div>
 
                 <a
-                class="boton"
-                target="_blank"
-                href="https://wa.me/573138368430?text=Hola quiero comprar ${encodeURIComponent(p.PRODUCTO)}">
+                    href="#"
+                    class="comprar"
+                    onclick="agregar('${(p.PRODUCTO || '').replace(/'/g,'')}'); return false;">
 
-                Comprar
+                    Agregar al pedido
 
                 </a>
 
@@ -114,5 +195,4 @@ function mostrarProductos(datos){
         </div>
         `;
     });
-
 }
