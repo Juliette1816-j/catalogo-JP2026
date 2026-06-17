@@ -12,33 +12,45 @@ fetch(API)
 
         let estado = "";
 
-        if(Number(p.Stock) === 0){
+        if(Number(p.STOCK) === 0){
             estado = "🔴 Agotado";
-        } else if(Number(p.Stock) <= 5){
+        } else if(Number(p.STOCK) <= 5){
             estado = "🟡 Últimas unidades";
         } else {
             estado = "🟢 Disponible";
         }
 
+        const imagen =
+            p.IMAGENES
+            ? p.IMAGENES.split(",")[0].trim()
+            : "https://via.placeholder.com/300x300?text=Sin+Imagen";
+
         contenedor.innerHTML += `
         <div class="card">
 
-            <img src="${p.Imagen}">
+            <img src="${imagen}" alt="${p.PRODUCTO}">
 
-            <h3>${p.Producto}</h3>
+            <div class="info">
 
-            <p>${p.Diseño}</p>
+                <h3>${p.PRODUCTO}</h3>
 
-            <p>$${Number(p.Precio).toLocaleString()}</p>
+                <p>${p.CATEGORIA}</p>
 
-            <p>${estado}</p>
+                <p><b>${p["VALOR VENTA"]}</b></p>
 
-            <a
-            href="https://wa.me/+573138368430?text=Hola,%20quiero%20comprar%20${encodeURIComponent(p.Producto)}%20${encodeURIComponent(p.Diseño)}"
-            target="_blank">
-            Comprar
-            </a>
+                <p>${estado}</p>
+
+                <p>Stock: ${p.STOCK}</p>
+
+                <a class="boton"
+                target="_blank"
+                href="https://wa.me/573138368430?text=Hola%20quiero%20comprar%20${encodeURIComponent(p.PRODUCTO)}">
+                Comprar
+                </a>
+
+            </div>
 
         </div>`;
     });
+
 });
