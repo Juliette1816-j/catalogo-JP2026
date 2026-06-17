@@ -1,47 +1,92 @@
-const API =
 "https://opensheet.elk.sh/1Cd2_fF394dI7IviGzBTbcozgRTTu6cHo3I8kqyBU7xA/MEDIAS_STOCK";
+
+let productosGlobal = [];
 
 fetch(API)
 .then(r => r.json())
 .then(datos => {
 
-    const contenedor = document.getElementById("productos");
+    productosGlobal = datos;
+
+    mostrarProductos(datos);
+
+});
+
+function cambiarLogo(categoria){
+
+    const logo =
+    document.getElementById("logoCategoria");
+
+    if(
+        categoria === "Mujer" ||
+    ){
+        logo.src = "logo-rosa.png";
+    }
+    else{
+        logo.src = "logo-negro.png";
+    }
+    else{
+        logo.src = "logo-azul-rosa.png";
+    }
+
+}
+function filtrar(categoria){
+
+    cambiarLogo(categoria);
+
+    if(categoria === "Todos"){
+
+        mostrarProductos(productosGlobal);
+        return;
+    }
+
+    const filtrados =
+    productosGlobal.filter(
+        p => p.CATEGORIA_VISUAL === categoria
+    );
+
+    mostrarProductos(filtrados);
+}
+function mostrarProductos(datos){
+
+    const contenedor =
+    document.getElementById("productos");
+
+    contenedor.innerHTML = "";
 
     datos.forEach(p => {
 
+        let imagen =
+        p.IMAGENES
+        ? p.IMAGENES.split(",")[0].trim()
+        : "https://via.placeholder.com/300";
+
+        const match =
+        imagen.match(/id=([^&]+)/);
+
+        if(match){
+
+            imagen =
+            `https://lh3.googleusercontent.com/d/${match[1]}`;
+        }
+
         let estado = "";
 
-        if (Number(p.STOCK) === 0) {
+        if(Number(p.STOCK) === 0){
             estado = "🔴 Agotado";
-        } else if (Number(p.STOCK) <= 5) {
+        }
+        else if(Number(p.STOCK) <= 5){
             estado = "🟡 Últimas unidades";
-        } else {
+        }
+        else{
             estado = "🟢 Disponible";
         }
 
-        let imagen = "https://via.placeholder.com/300x300?text=Sin+Imagen";
-
-        if (p.IMAGENES) {
-
-            imagen = p.IMAGENES.split(",")[0].trim();
-
-            // Convertir URL de Google Drive
-            const match = imagen.match(/id=([^&]+)/);
-
-            if (match) {
-                imagen = `https://lh3.googleusercontent.com/d/${match[1]}`;
-            }
-        }
-
         contenedor.innerHTML += `
+
         <div class="card">
 
-            <img
-                src="${imagen}"
-                alt="${p.PRODUCTO}"
-                loading="lazy"
-                onerror="this.src='https://via.placeholder.com/300x300?text=Sin+Imagen'"
-            >
+            <img src="${imagen}">
 
             <div class="info">
 
@@ -49,25 +94,25 @@ fetch(API)
 
                 <p>${p.CATEGORIA}</p>
 
-                <p><b>${p["VALOR VENTA"]}</b></p>
+                <p class="precio">
+                    ${p["VALOR VENTA"]}
+                </p>
 
                 <p>${estado}</p>
 
-                <p>Stock: ${p.STOCK}</p>
-
                 <a
-                    class="boton"
-                    target="_blank"
-                    href="https://wa.me/573138368430?text=Hola%20quiero%20comprar%20${encodeURIComponent(p.PRODUCTO)}">
-                    Comprar
+                class="boton"
+                target="_blank"
+                href="https://wa.me/573138368430?text=Hola quiero comprar ${encodeURIComponent(p.PRODUCTO)}">
+
+                Comprar
+
                 </a>
 
             </div>
 
-        </div>`;
+        </div>
+        `;
     });
 
-})
-.catch(error => {
-    console.error("Error:", error);
-});
+}
