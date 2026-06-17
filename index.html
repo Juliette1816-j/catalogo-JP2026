@@ -1,50 +1,42 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JP Trend Store</title>
-    <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JP Trend Store</title>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
 
 <header class="header">
-
-    <img id="logoCategoria"
-         src="logo-negro.png"
-         class="logo"
-         alt="JP Trend Store">
-
+    <img id="logoCategoria" class="logo"
+    src="https://lh3.googleusercontent.com/d/19Tqu5sfgN26MqUu3A3CVpaohOPzivXHW">
     <h1>JP Trend Store</h1>
-
-    <p>Medias, accesorios y tendencias que marcan tu estilo</p>
-
+    <p>Medias • Joyería • Accesorios</p>
 </header>
 
-<div class="filtros">
-
-    <button onclick="filtrar('Todos')">Todos</button>
-
-    <button onclick="filtrar('Hombre')">👨 Hombre</button>
-
-    <button onclick="filtrar('Mujer')">👩 Mujer</button>
-
-    <button onclick="filtrar('Niño')">🧒 Niño</button>
-
-    <button onclick="filtrar('Niña')">👧 Niña</button>
-
-    <button onclick="filtrar('Unisex')">✨ Unisex</button>
-
+<div class="toolbar">
+    <input id="buscador" placeholder="🔍 Buscar producto">
+    <div class="filtros">
+        <button onclick="filtrar('Todos')">Todos</button>
+        <button onclick="filtrar('Medias')">🧦 Medias</button>
+        <button onclick="filtrar('Joyeria')">💎 Joyería</button>
+    </div>
 </div>
 
-<input
-id="buscador"
-type="text"
-placeholder="🔍 Buscar producto...">
+<main class="container">
+    <section>
+        <div id="productos"></div>
+    </section>
 
-<div id="productos"></div>
+    <aside class="pedido">
+        <h2>Tu pedido</h2>
+        <ul id="listaPedido"></ul>
+        <p><strong>Total productos:</strong> <span id="totalItems">0</span></p>
+        <a id="btnWhatsapp" target="_blank" class="btn-wsp">Enviar pedido</a>
+    </aside>
+</main>
 
 <script src="script.js"></script>
-
 </body>
 </html>
