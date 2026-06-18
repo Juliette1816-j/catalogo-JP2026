@@ -79,25 +79,6 @@ document.addEventListener("input", (e) => {
 
 });
 
-function filtrarPublico(publico){
-
-    if(publico === "Todos"){
-
-        mostrarProductos(productosGlobal);
-        return;
-    }
-
-    const filtrados =
-    productosGlobal.filter(p =>
-        (p.PUBLICO || "")
-        .trim()
-        .toLowerCase() ===
-        publico.toLowerCase()
-    );
-
-    mostrarProductos(filtrados);
-}
-
 function agregar(nombre){
 
     if(!pedido[nombre]){
@@ -140,28 +121,29 @@ function actualizarPedido(){
     let totalItems = 0;
     let totalValor = 0;
 
-    const producto =
-    productosGlobal.find(
-    p => p.PRODUCTO === nombre
-    );
-    
-    const precio =
-    obtenerPrecio(
-    producto["VALOR VENTA"]
-    );
-    
-    totalValor +=
-    precio * cantidad;
-
-    document
-    .getElementById("totalValor")
-    .textContent =
-    totalValor.toLocaleString("es-CO");
-
     let mensaje =
     "Hola, deseo pedir:%0A";
 
     Object.entries(pedido).forEach(([nombre,cantidad]) => {
+
+        const producto =
+        productosGlobal.find(
+            p => p.PRODUCTO === nombre
+        );
+
+        if(producto){
+
+            const precio =
+            Number(
+                producto["VALOR VENTA"]
+                .replace("$","")
+                .replaceAll(".","")
+                .replaceAll(" ","")
+            );
+
+            totalValor +=
+            precio * cantidad;
+        }
 
         totalItems += cantidad;
 
@@ -178,10 +160,15 @@ function actualizarPedido(){
     document.getElementById("totalItems")
     .textContent = totalItems;
 
+    document.getElementById("totalValor")
+    .textContent =
+    totalValor.toLocaleString("es-CO");
+
     document.getElementById("btnWhatsapp")
     .href =
     `https://wa.me/573138368430?text=${mensaje}`;
 }
+
 function filtrarPublico(publico){
 
     const logo =
