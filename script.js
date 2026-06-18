@@ -135,7 +135,7 @@ function mostrarProductos(datos){
         "disponible";
 
         let textoEstado =
-        "DISPONIBLE";
+        "✔ Disponible";
 
         if(stock === 0){
 
@@ -143,7 +143,7 @@ function mostrarProductos(datos){
             "agotado";
 
             textoEstado =
-            "AGOTADO";
+            "✖ Agotado";
 
         }else if(stock <= 5){
 
@@ -151,7 +151,7 @@ function mostrarProductos(datos){
             "ultimas";
 
             textoEstado =
-            `ÚLTIMAS ${stock}`;
+            `⚠ Últimas unidades ${stock}`;
 
         }
 
