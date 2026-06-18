@@ -3,6 +3,24 @@ const API = "https://opensheet.elk.sh/1Cd2_fF394dI7IviGzBTbcozgRTTu6cHo3I8kqyBU7
 const LOGO_MEDIAS = "https://lh3.googleusercontent.com/d/19Tqu5sfgN26MqUu3A3CVpaohOPzivXHW";
 const LOGO_JOYERIA = "https://lh3.googleusercontent.com/d/1rSFjBpnOpUPOSrIVZ1BkjcBXWUokA_b4";
 
+const logos = {
+
+"Hombre":
+"https://lh3.googleusercontent.com/d/19Tqu5sfgN26MqUu3A3CVpaohOPzivXHW",
+
+"Mujer":
+"https://lh3.googleusercontent.com/d/1rSFjBpnOpUPOSrIVZ1BkjcBXWUokA_b4",
+
+"Niño":
+"https://lh3.googleusercontent.com/d/1LF_JI852MojEs9PuUgRTII5bMYklZzBA",
+
+"Niña":
+"https://lh3.googleusercontent.com/d/1LF_JI852MojEs9PuUgRTII5bMYklZzBA",
+
+"Unisex":
+"https://lh3.googleusercontent.com/d/1LF_JI852MojEs9PuUgRTII5bMYklZzBA"
+};
+
 let productosGlobal = [];
 let pedido = {};
 
@@ -165,9 +183,18 @@ function mostrarProductos(datos){
 
             <div class="info">
 
-                <h3>
-                    ${p.PRODUCTO}
-                </h3>
+                <h3>Público</h3>
+                <div class="tags">
+                    <span class="tag categoria">
+                        ${p.CATEGORIA}
+                    </span>
+                
+                    <span class="tag publico">
+                        ${p.PUBLICO}
+                    </span>
+                </div>
+                
+                <h3>${p.PRODUCTO}</h3>
 
                 <div class="precio">
                     ${p["VALOR VENTA"] || ""}
