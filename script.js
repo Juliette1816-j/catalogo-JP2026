@@ -182,6 +182,35 @@ function actualizarPedido(){
     .href =
     `https://wa.me/573138368430?text=${mensaje}`;
 }
+function filtrarPublico(publico){
+
+    const logo =
+    document.getElementById("logoCategoria");
+
+    if(logos[publico]){
+        logo.src = logos[publico];
+    }
+
+    if(publico === "Todos"){
+
+        logo.src =
+        LOGO_MEDIAS;
+
+        mostrarProductos(productosGlobal);
+        return;
+    }
+
+    const filtrados =
+    productosGlobal.filter(
+        p =>
+        (p.PUBLICO || "")
+        .trim()
+        .toLowerCase() ===
+        publico.toLowerCase()
+    );
+
+    mostrarProductos(filtrados);
+}
 
 function mostrarProductos(datos){
 
@@ -241,8 +270,7 @@ function mostrarProductos(datos){
                 alt="${p.PRODUCTO}">
 
             <div class="info">
-
-                <h3>Público</h3>
+            
                 <div class="tags">
                     <span class="tag categoria">
                         ${p.CATEGORIA}
