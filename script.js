@@ -79,6 +79,25 @@ document.addEventListener("input", (e) => {
 
 });
 
+function filtrarPublico(publico){
+
+    if(publico === "Todos"){
+
+        mostrarProductos(productosGlobal);
+        return;
+    }
+
+    const filtrados =
+    productosGlobal.filter(p =>
+        (p.PUBLICO || "")
+        .trim()
+        .toLowerCase() ===
+        publico.toLowerCase()
+    );
+
+    mostrarProductos(filtrados);
+}
+
 function agregar(nombre){
 
     if(!pedido[nombre]){
@@ -90,6 +109,27 @@ function agregar(nombre){
     actualizarPedido();
 }
 
+function filtrarCategoria(cat){
+
+    cambiarLogo(cat);
+
+    if(cat === "Todos"){
+
+        mostrarProductos(productosGlobal);
+        return;
+    }
+
+    const filtrados =
+    productosGlobal.filter(p =>
+        (p.CATEGORIA || "")
+        .trim()
+        .toLowerCase() ===
+        cat.toLowerCase()
+    );
+
+    mostrarProductos(filtrados);
+}
+
 function actualizarPedido(){
 
     const lista =
@@ -98,6 +138,25 @@ function actualizarPedido(){
     lista.innerHTML = "";
 
     let totalItems = 0;
+    let totalValor = 0;
+
+    const producto =
+    productosGlobal.find(
+    p => p.PRODUCTO === nombre
+    );
+    
+    const precio =
+    obtenerPrecio(
+    producto["VALOR VENTA"]
+    );
+    
+    totalValor +=
+    precio * cantidad;
+
+    document
+    .getElementById("totalValor")
+    .textContent =
+    totalValor.toLocaleString("es-CO");
 
     let mensaje =
     "Hola, deseo pedir:%0A";
@@ -153,7 +212,7 @@ function mostrarProductos(datos){
         "disponible";
 
         let textoEstado =
-        "✔ Disponible";
+        "✦ Disponible";
 
         if(stock === 0){
 
@@ -169,7 +228,7 @@ function mostrarProductos(datos){
             "ultimas";
 
             textoEstado =
-            `⚠ Últimas unidades ${stock}`;
+            `✦ Últimas ${stock}`;
 
         }
 
