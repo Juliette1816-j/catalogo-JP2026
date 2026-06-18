@@ -18,37 +18,51 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
     <p>Medias • Joyería • Accesorios</p>
 </header>
 
+<div class="filtros">
+
+<div class="grupo-filtros">
+
+<button onclick="filtrarCategoria('Todos')">
+✨ Todos
+</button>
+
+<button onclick="filtrarCategoria('Medias')">
+🧦 Medias
+</button>
+
+<button onclick="filtrarCategoria('Joyeria')">
+💎 Joyeria
+</button>
+
+</div>
+
 <div class="grupo-filtros">
 
 <button onclick="filtrarPublico('Todos')">
-<i class="fa-solid fa-layer-group"></i>
 Todos
 </button>
 
-<button onclick="filtrarPublico('Hombre')">
-<i class="fa-solid fa-person"></i>
-Hombre
-</button>
-
 <button onclick="filtrarPublico('Mujer')">
-<i class="fa-solid fa-person-dress"></i>
-Mujer
+👩🏻‍🦰 Mujer
 </button>
 
-<button onclick="filtrarPublico('Niño')">
-<i class="fa-solid fa-child"></i>
-Niño
-</button>
-
-<button onclick="filtrarPublico('Niña')">
-<i class="fa-solid fa-child-dress"></i>
-Niña
+<button onclick="filtrarPublico('Hombre')">
+🧑🏼‍🦱 Hombre
 </button>
 
 <button onclick="filtrarPublico('Unisex')">
-<i class="fa-solid fa-venus-mars"></i>
-Unisex
+⚧️ Unisex
 </button>
+
+<button onclick="filtrarPublico('Niño')">
+👦🏻 Niño
+</button>
+
+<button onclick="filtrarPublico('Niña')">
+👧🏽 Niña
+</button>
+
+</div>
 
 </div>
 
@@ -60,7 +74,17 @@ Unisex
     <aside class="pedido">
         <h2>Tu pedido</h2>
         <ul id="listaPedido"></ul>
-        <p><strong>Total productos:</strong> <span id="totalItems">0</span></p>
+        
+        <p>
+        <strong>Productos:</strong>
+        <span id="totalItems">0</span>
+        </p>
+        
+        <p>
+        <strong>Total:</strong>
+        $<span id="totalValor">0</span>
+        </p>
+        
         <a id="btnWhatsapp" target="_blank" class="btn-wsp">Enviar pedido</a>
     </aside>
 </main>
