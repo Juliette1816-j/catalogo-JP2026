@@ -246,7 +246,23 @@ body{
     background:#d4af37;
     color:black;
 }
+.cantidad-box{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:15px;
+    margin-top:15px;
+}
 
+.cantidad-box button{
+    width:35px;
+    height:35px;
+    border:none;
+    border-radius:50%;
+    background:#111;
+    color:white;
+    cursor:pointer;
+}
 /* CARRITO */
 
 .pedido{
