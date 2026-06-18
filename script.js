@@ -203,11 +203,7 @@ function mostrarProductos(datos){
                 <div class="estado ${claseEstado}">
                     ${textoEstado}
                 </div>
-
-                <div class="stock">
-                    Inventario: ${stock}
-                </div>
-
+                
                 <a
                     href="#"
                     class="comprar"
