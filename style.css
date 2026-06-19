@@ -323,20 +323,36 @@ left:0;
 }
 
 .btn-agregar{
+
     width:100%;
     margin-top:15px;
-    border:none;
+
+    padding:14px;
+
+    border:1px solid #d4af37;
+
+    border-radius:14px;
+
     background:#C9C2B9;
+
     color:#111;
-    padding:12px;
-    border-radius:10px;
+
+    font-weight:700;
+
     cursor:pointer;
+
+    transition:all .35s ease;
 }
 
 .btn-agregar:hover{
+
     background:#d4af37;
-    color:black;
+
+    color:#111;
+
+    transform:translateY(-3px);
 }
+
 .cantidad-box{
     display:flex;
     justify-content:center;
