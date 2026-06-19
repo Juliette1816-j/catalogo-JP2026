@@ -111,6 +111,27 @@ function filtrarCategoria(cat){
     mostrarProductos(filtrados);
 }
 
+function agregar(nombre, precio, cantidad){
+
+    const existe =
+    pedido.find(p => p.nombre === nombre);
+
+    if(existe){
+
+        existe.cantidad += cantidad;
+
+    }else{
+
+        pedido.push({
+            nombre,
+            precio,
+            cantidad
+        });
+    }
+
+    actualizarPedido();
+}
+
 function actualizarPedido(){
 
     const lista =
