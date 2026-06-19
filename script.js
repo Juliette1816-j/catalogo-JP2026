@@ -257,7 +257,7 @@ function mostrarProductos(datos){
         let textoEstado =
         "✦ Disponible";
 
-        if(stock === 0){
+        if(stock <= 0){
 
             claseEstado =
             "agotado";
