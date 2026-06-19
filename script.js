@@ -79,17 +79,6 @@ document.addEventListener("input", (e) => {
 
 });
 
-function agregar(nombre){
-
-    if(!pedido[nombre]){
-        pedido[nombre] = 0;
-    }
-
-    pedido[nombre]++;
-
-    actualizarPedido();
-}
-
 function filtrarCategoria(cat){
 
     cambiarLogo(cat);
@@ -219,6 +208,30 @@ function filtrarPublico(publico){
 
     mostrarProductos(filtrados);
 }
+function cambiarCantidad(id, cambio){
+
+    if(!cantidades[id])
+        cantidades[id]=1;
+
+    cantidades[id]+=cambio;
+
+    if(cantidades[id] < 1)
+        cantidades[id]=1;
+
+    document.getElementById(
+    `cantidad-${id}`
+    ).textContent =
+    cantidades[id];
+}
+function obtenerPrecio(valor){
+
+    return Number(
+        valor
+        .replace("$","")
+        .replace(/\./g,"")
+        .trim()
+    );
+}
 
 function mostrarProductos(datos){
 
@@ -298,11 +311,33 @@ function mostrarProductos(datos){
                 <div class="estado ${claseEstado}">
                     ${textoEstado}
                 </div>
+
+                <div class="cantidad-box">
+
+                    <button onclick="cambiarCantidad(${i},-1)">
+                    −
+                    </button>
+                    
+                    <span id="cantidad-${i}">
+                    1
+                    </span>
+                    
+                    <button onclick="cambiarCantidad(${i},1)">
+                    +
+                    </button>
+                    
+                 </div>
                 
                 <a
                     href="#"
                     class="comprar"
-                    onclick="agregar('${(p.PRODUCTO || '').replace(/'/g,'')}'); return false;">
+                    onclick="
+                    agregar(
+                    '${p.PRODUCTO}',
+                    ${obtenerPrecio(p['VALOR VENTA'])},
+                    cantidades[${i}] || 1
+                    )
+                    "
 
                     Agregar al pedido
 
