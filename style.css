@@ -374,12 +374,12 @@ left:0;
 /* CARRITO */
 
 .pedido{
-    background:#fff;
+    background:write;
     padding:25px;
-    border-radius:20px;
+    border-radius:25px;
     box-shadow:
-        0 5px 20px rgba(0,0,0,.08);
-    border:1px solid #f1f1f1;
+        0 10px 30px rgba(0,0,0,.08);
+    border top:4px solid #d4af37;
 }
 
 .pedido h2{
