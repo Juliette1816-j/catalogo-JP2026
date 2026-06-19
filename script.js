@@ -122,6 +122,16 @@ function agregar(nombre, precio, cantidad){
     actualizarPedido();
 }
 
+function eliminarProducto(nombre){
+
+pedido =
+pedido.filter(
+p => p.nombre !== nombre
+);
+
+actualizarPedido();
+}
+
 function actualizarPedido(){
 
     const lista =
@@ -143,10 +153,21 @@ function actualizarPedido(){
         item.precio * item.cantidad;
 
         lista.innerHTML += `
-        <li>
-            ${item.nombre}
-            x${item.cantidad}
-        </li>`;
+          <li class="item-carrito">
+
+          <div>
+             ${item.nombre}
+             x${item.cantidad}
+          </div>
+
+          <button
+               onclick="eliminarProducto('$.  {item.nombre}')">
+
+               🗑️
+
+           </button>
+
+</li>`;
 
         mensaje +=
         `${item.nombre} x${item.cantidad}%0A`;
