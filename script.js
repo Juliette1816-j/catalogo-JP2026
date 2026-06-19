@@ -18,7 +18,7 @@ const logos = {
 "https://lh3.googleusercontent.com/d/1LF_JI852MojEs9PuUgRTII5bMYklZzBA",
 
 "Unisex":
-"https://lh3.googleusercontent.com/d/1LF_JI852MojEs9PuUgRTII5bMYklZzBA"
+"https://lh3.googleusercontent.com/d/19Tqu5sfgN26MqUu3A3CVpaohOPzivXHW"
 };
 
 let productosGlobal = [];
