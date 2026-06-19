@@ -22,7 +22,8 @@ const logos = {
 };
 
 let productosGlobal = [];
-let pedido = {};
+let pedido = [];
+let cantidades = {};
 
 fetch(API)
 .then(r => r.json())
@@ -134,36 +135,21 @@ function actualizarPedido(){
     let mensaje =
     "Hola, deseo pedir:%0A";
 
-    Object.entries(pedido).forEach(([nombre,cantidad]) => {
+    pedido.forEach(item => {
 
-        const producto =
-        productosGlobal.find(
-            p => p.PRODUCTO === nombre
-        );
+        totalItems += item.cantidad;
 
-        if(producto){
-
-            const precio =
-            Number(
-                producto["VALOR VENTA"]
-                .replace("$","")
-                .replaceAll(".","")
-                .replaceAll(" ","")
-            );
-
-            totalValor +=
-            precio * cantidad;
-        }
-
-        totalItems += cantidad;
+        totalValor +=
+        item.precio * item.cantidad;
 
         lista.innerHTML += `
         <li>
-            ${nombre} x${cantidad}
+            ${item.nombre}
+            x${item.cantidad}
         </li>`;
 
         mensaje +=
-        `${nombre} x${cantidad}%0A`;
+        `${item.nombre} x${item.cantidad}%0A`;
 
     });
 
@@ -173,6 +159,9 @@ function actualizarPedido(){
     document.getElementById("totalValor")
     .textContent =
     totalValor.toLocaleString("es-CO");
+
+    mensaje +=
+    `%0ATotal: $${totalValor.toLocaleString("es-CO")}`;
 
     document.getElementById("btnWhatsapp")
     .href =
@@ -240,7 +229,11 @@ function mostrarProductos(datos){
 
     contenedor.innerHTML = "";
 
-    datos.forEach(p => {
+    datos.forEach((p,i) => {
+
+        if(!cantidades[i]){
+            cantidades[i] = 1;
+        }
 
         let imagen =
         p.IMAGENES
@@ -279,7 +272,6 @@ function mostrarProductos(datos){
 
             textoEstado =
             `✦ Últimas ${stock}`;
-
         }
 
         contenedor.innerHTML += `
@@ -287,25 +279,27 @@ function mostrarProductos(datos){
         <div class="card">
 
             <img
-                src="${imagen}"
-                alt="${p.PRODUCTO}">
+            src="${imagen}"
+            alt="${p.PRODUCTO}">
 
             <div class="info">
-            
+
                 <div class="tags">
+
                     <span class="tag categoria">
                         ${p.CATEGORIA}
                     </span>
-                
+
                     <span class="tag publico">
                         ${p.PUBLICO}
                     </span>
+
                 </div>
-                
+
                 <h3>${p.PRODUCTO}</h3>
 
                 <div class="precio">
-                    ${p["VALOR VENTA"] || ""}
+                    ${p["VALOR VENTA"]}
                 </div>
 
                 <div class="estado ${claseEstado}">
@@ -315,33 +309,30 @@ function mostrarProductos(datos){
                 <div class="cantidad-box">
 
                     <button onclick="cambiarCantidad(${i},-1)">
-                    −
+                        -
                     </button>
-                    
+
                     <span id="cantidad-${i}">
-                    1
+                        ${cantidades[i]}
                     </span>
-                    
+
                     <button onclick="cambiarCantidad(${i},1)">
-                    +
+                        +
                     </button>
-                    
-                 </div>
-                
-                <a
-                    href="#"
-                    class="comprar"
-                    onclick="
-                    agregar(
-                    '${p.PRODUCTO}',
+
+                </div>
+
+                <button
+                class="btn-agregar"
+                onclick="agregar(
+                    '${(p.PRODUCTO || '').replace(/'/g,'\\\'')}',
                     ${obtenerPrecio(p['VALOR VENTA'])},
-                    cantidades[${i}] || 1
-                    )
-                    "
+                    cantidades[${i}]
+                )">
 
                     Agregar al pedido
 
-                </a>
+                </button>
 
             </div>
 
