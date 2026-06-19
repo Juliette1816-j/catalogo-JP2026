@@ -88,16 +88,30 @@ body{
     gap:10px;
 }
 
-.grupo-filtros button {
-    background:white;
+.grupo-filtros button{
+    position:relative;
+    overflow:hidden;
     border:none;
-    padding:12px 18px;
-    border-radius:40px;
-    font-weight:600;
+    padding:12px 22px;
+    border-radius:50px;
+    background:white;
+    font-weight:700;
     cursor:pointer;
-    transition:.3s;
+    transition:.4s;
     box-shadow:
-        0 3px 10px rgba(0,0,0,.08);
+        0 4px 12px rgba(0,0,0,.08);
+    z-index:1;
+}
+
+.grupo-filtros button::before{
+    content:"";
+    position:absolute;
+    top:0;
+    left:-100%;
+    width:100%;
+    height:100%;
+    transition:.4s;
+    z-index:-1;
 }
 
 .grupo-filtros button:hover{
@@ -167,15 +181,90 @@ body{
     font-size:12px;
     font-weight:600;
 }
-
-.categoria{
-    background:#fff3d6;
-    color:#9f7000;
+.categoria-btn::before{
+    background:
+    linear-gradient(
+    90deg,
+    #d4af37,
+    #f7d86f
+    );
 }
 
-.publico{
-    background:#e6f0ff;
-    color:#1e63d6;
+.categoria-btn:hover{
+
+    color:white;
+}
+.categoria-btn:hover::before{    
+    left:0;
+}
+.mujer-btn::before{
+    background:
+    linear-gradient(
+    90deg,
+    #f8c7d8,
+    #e68fb1
+    );
+}
+
+.hombre-btn::before{
+    background:
+    linear-gradient(
+    90deg,
+    #7cb7ff,
+    #3d7fe0
+    );
+}
+
+.nino-btn::before{
+    background:
+    linear-gradient(
+    90deg,
+    #87ceeb,
+    #4fa3d9
+    );
+}
+
+.nina-btn::before{
+    background:
+    linear-gradient(
+    90deg,
+    #ffc0cb,
+    #ff91a4
+    );
+}
+
+.unisex-btn::before{
+    background:
+    linear-gradient(
+    90deg,
+    #b89cff,
+    #8468ff
+    );
+}
+
+.mujer-btn:hover,
+
+.hombre-btn:hover,
+
+.nino-btn:hover,
+
+.nina-btn:hover,
+
+.unisex-btn:hover{
+    color:white;
+}
+
+.mujer-btn:hover::before,
+
+.hombre-btn:hover::before,
+
+.nino-btn:hover::before,
+
+.nina-btn:hover::before,
+
+.unisex-btn:hover::before{
+
+left:0;
 }
 
 /* TITULO */
