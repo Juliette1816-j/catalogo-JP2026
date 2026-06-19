@@ -358,12 +358,19 @@ left:0;
     border:none;
     border-radius:50%;
     background:#COCAC9;
-    color:#111;
+    color:#COCAC9;
     font-size:20px;
     font-weight:bold;
     cursor:pointer;
     transition:.3s;
 }
+.cantidad-box button:hover{
+
+    background:#d4af37;
+    transform:scale(1.1);
+    color:black;
+}
+
 /* CARRITO */
 
 .pedido{
