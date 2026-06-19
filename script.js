@@ -161,7 +161,7 @@ function actualizarPedido(){
           </div>
 
           <button
-               onclick="eliminarProducto('$.  {item.nombre}')">
+               onclick="eliminarProducto('${item.nombre.replace(/'/g,"\\'")}')"
 
                🗑️
 
