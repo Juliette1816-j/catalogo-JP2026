@@ -29,7 +29,7 @@ body{
 }
 
 .header .logo{
-    width:clamp(64px, 16vw, 90px);
+    width:clamp(90px, 24vw, 130px);
     margin-bottom:12px;
     border-radius:50%;
     border:2px solid #d4af37;
