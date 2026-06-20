@@ -99,7 +99,6 @@ function agregar(nombre, precio, cantidad){
     }
 
     actualizarPedido();
-    abrirPedido();
 }
 function eliminarProducto(nombre){
     pedido = pedido.filter(p => p.nombre !== nombre);
@@ -122,7 +121,7 @@ function actualizarPedido(){
         // FIX: el botón ahora cierra bien la etiqueta de apertura antes del emoji
         lista.innerHTML += `
           <li class="item-pedido">
-            <div>${item.nombre} x${item.cantidad}</div>
+            <div>${escapeHTML(item.nombre)} x${item.cantidad}</div>
             <button class="btn-eliminar" onclick="eliminarProducto('${item.nombre.replace(/'/g, "\\'")}')">🗑️</button>
           </li>`;
 
@@ -191,6 +190,14 @@ function obtenerPrecio(valor){
     );
 }
 
+// Evita que datos del Google Sheet (producto, categoría, etc.) puedan
+// inyectar HTML/JS si alguien edita la hoja con contenido malicioso.
+function escapeHTML(str){
+    const div = document.createElement("div");
+    div.textContent = str ?? "";
+    return div.innerHTML;
+}
+
 function mostrarProductos(datos){
     const contenedor = document.getElementById("productos");
     contenedor.innerHTML = "";
@@ -234,11 +241,11 @@ function mostrarProductos(datos){
         contenedor.innerHTML += `
         <div class="card">
             <div class="img-wrap">
-                <img src="${imagen}" alt="${p.PRODUCTO}" loading="lazy" onerror="this.src='https://via.placeholder.com/300?text=Sin+imagen'">
+                <img src="${imagen}" alt="${escapeHTML(p.PRODUCTO)}" loading="lazy" onerror="this.src='https://via.placeholder.com/300?text=Sin+imagen'">
             </div>
             <div class="info">
-                <h3>${p.PRODUCTO || ""}</h3>
-                <div class="precio">${p["VALOR VENTA"] || ""}</div>
+                <h3>${escapeHTML(p.PRODUCTO)}</h3>
+                <div class="precio">${escapeHTML(p["VALOR VENTA"])}</div>
                 <div class="estado ${claseEstado}">${textoEstado}</div>
                 <div class="cantidad-box">
                     <button onclick="cambiarCantidad(${i},-1)">-</button>
