@@ -1,453 +1,109 @@
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JP Trend Store</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+</head>
 
-body{
-    font-family:'Cormorant Garamond', serif;
-    background:#f3efe7;
-    color:#222;
-    line-height:1.5;
-}
+<body>
+<header class="header">
+    <img id="logoCategoria" class="logo"
+    src="https://lh3.googleusercontent.com/d/19Tqu5sfgN26MqUu3A3CVpaohOPzivXHW">
+    <h1>JP Trend Store</h1>
+    <p>Medias • Joyería • Accesorios</p>
+</header>
 
-/* ===========================
-   HEADER
-=========================== */
-.header{
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    background:white;
-    padding:25px 20px;
-    text-align:center;
-    border-radius:0 0 25px 25px;
-    box-shadow:0 5px 20px rgba(0,0,0,.08);
-}
+<div class="buscador-container">
 
-.header .logo{
-    width:110px;
-    margin-bottom:10px;
-    border-radius:50%;
-}
+<input
+id="buscador"
+type="text"
+placeholder="Buscar producto...">
 
-.header h1{
-    font-size:42px;
-    font-weight:700;
-    letter-spacing:1px;
-    margin:0;
-}
+</div>
 
-.header p{
-    margin-top:8px;
-    color:#777;
-    font-size:18px;
-}
+<div class="filtros">
 
-/* ===========================
-   BUSCADOR
-=========================== */
-.buscador-container{
-    display:flex;
-    justify-content:center;
-    padding:25px 20px 10px;
-}
+<div class="grupo-filtros">
 
-#buscador{
-    width:100%;
-    max-width:500px;
-    height:50px;
-    border-radius:50px;
-    padding:0 25px;
-    font-size:16px;
-    font-family:'Cormorant Garamond', serif;
-    background:white;
-    box-shadow:0 5px 15px rgba(0,0,0,.08);
-    border:none;
-    outline:none;
-    transition:.3s;
-}
+<button
+class="categoria-btn"
+onclick="filtrarCategoria('Medias')">
+🧦 Medias
+</button>
 
-#buscador:focus{
-    box-shadow:0 5px 18px rgba(212,175,55,.4);
-}
+<button
+class="categoria-btn"
+onclick="filtrarCategoria('Joyeria')">
+💎 Joyería
+</button>
 
-/* ===========================
-   FILTROS
-=========================== */
-.filtros{
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    gap:15px;
-    padding:15px 20px 25px;
-}
+</div>
 
-.grupo-filtros{
-    display:flex;
-    flex-wrap:wrap;
-    justify-content:center;
-    gap:14px;
-}
+<div class="grupo-filtros">
 
-.grupo-filtros button{
-    position:relative;
-    overflow:hidden;
-    isolation:isolate;
-    min-width:140px;
-    height:54px;
-    padding:0 20px;
-    border:2px solid #D4AF37;
-    border-radius:40px;
-    background:white;
-    color:#222;
-    font-size:17px;
-    font-weight:600;
-    font-family:'Cormorant Garamond', serif;
-    cursor:pointer;
-    transition:transform .3s, box-shadow .3s, color .3s;
-    box-shadow:0 4px 12px rgba(0,0,0,.06);
-}
+<button
+class="mujer-btn"
+onclick="filtrarPublico('Mujer')">
+👩🏻‍🦰 Mujer
+</button>
 
-/* capa de color que se desliza al hacer hover/click */
-.grupo-filtros button::before{
-    content:"";
-    position:absolute;
-    inset:0;
-    left:-100%;
-    z-index:-1;
-    transition:left .35s ease;
-}
+<button
+class="hombre-btn"
+onclick="filtrarPublico('Hombre')">
+🧑🏼‍🦱 Hombre
+</button>
 
-.grupo-filtros button:hover{
-    transform:translateY(-3px);
-    color:white;
-    box-shadow:0 10px 22px rgba(212,175,55,.35);
-}
+<button
+class="unisex-btn"
+onclick="filtrarPublico('Unisex')">
+⚧️ Unisex
+</button>
 
-.grupo-filtros button:hover::before{
-    left:0;
-}
+<button
+class="nino-btn"
+onclick="filtrarPublico('Niño')">
+👦🏻 Niño
+</button>
 
-.grupo-filtros button.activo{
-    color:white;
-}
-.grupo-filtros button.activo::before{
-    left:0;
-}
+<button
+class="nina-btn"
+onclick="filtrarPublico('Niña')">
+👧🏽 Niña
+</button>
 
-/* colores por categoría */
-.categoria-btn{ border-color:#D4AF37; }
-.categoria-btn::before{
-    background:linear-gradient(135deg,#d4af37,#f7d86f);
-}
+</div>
 
-.mujer-btn{ border-color:#e6b7c8; }
-.mujer-btn::before{
-    background:linear-gradient(135deg,#f8c7d8,#e68fb1);
-}
+</div>
 
-.hombre-btn{ border-color:#7aa7d8; }
-.hombre-btn::before{
-    background:linear-gradient(135deg,#7cb7ff,#3d7fe0);
-}
+<main class="container">
+    <section>
+        <div id="productos"></div>
+    </section>
 
-.unisex-btn{ border-color:#a88edb; }
-.unisex-btn::before{
-    background:linear-gradient(135deg,#b89cff,#8468ff);
-}
+    <aside class="pedido">
+        <h2>Tu pedido</h2>
+        <ul id="listaPedido"></ul>
 
-.nino-btn{ border-color:#6fcf97; }
-.nino-btn::before{
-    background:linear-gradient(135deg,#87ceeb,#4fa3d9);
-}
+        <p>
+        <strong>Productos:</strong>
+        <span id="totalItems">0</span>
+        </p>
 
-.nina-btn{ border-color:#ffb6c1; }
-.nina-btn::before{
-    background:linear-gradient(135deg,#ffc0cb,#ff91a4);
-}
+        <p>
+        <strong>Total:</strong>
+        $<span id="totalValor">0</span>
+        </p>
 
-/* ===========================
-   CONTENIDO PRINCIPAL
-=========================== */
-.container{
-    display:grid;
-    grid-template-columns:1fr 320px;
-    gap:25px;
-    padding:0 20px 40px;
-    align-items:start;
-}
+        <a id="btnWhatsapp" target="_blank" class="btn-wsp">Enviar pedido</a>
+    </aside>
+</main>
 
-/* ===========================
-   PRODUCTOS
-=========================== */
-#productos{
-    display:grid;
-    grid-template-columns:repeat(auto-fill,minmax(260px,1fr));
-    gap:25px;
-}
-
-.card{
-    background:#fffdf9;
-    border-radius:18px;
-    overflow:hidden;
-    box-shadow:0 3px 10px rgba(0,0,0,.08);
-    transition:transform .35s, box-shadow .35s;
-}
-
-.card:hover{
-    transform:translateY(-8px);
-    box-shadow:0 15px 30px rgba(212,175,55,.3);
-}
-
-.card img{
-    width:100%;
-    height:260px;
-    object-fit:cover;
-    background:#fafafa;
-    display:block;
-    transition:.35s;
-}
-
-.card:hover img{
-    transform:scale(1.04);
-}
-
-.info{
-    padding:16px;
-}
-
-.tags{
-    display:flex;
-    gap:8px;
-    margin-bottom:10px;
-    flex-wrap:wrap;
-}
-
-.tag{
-    padding:5px 10px;
-    border-radius:20px;
-    font-size:12px;
-    font-weight:600;
-    background:#f3efe7;
-}
-
-.info h3{
-    margin-bottom:10px;
-    min-height:50px;
-    font-size:20px;
-    font-weight:700;
-}
-
-.precio{
-    font-size:26px;
-    font-weight:bold;
-    color:#b8860b;
-}
-
-.estado{
-    margin-top:8px;
-    font-weight:600;
-    font-size:14px;
-}
-
-.disponible{ color:#1e9e51; }
-.ultimas{ color:#d39c00; }
-.agotado{ color:#d63b3b; }
-
-.stock{
-    margin-top:8px;
-    color:#666;
-    font-size:14px;
-}
-
-/* selector de cantidad */
-.cantidad-box{
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    gap:15px;
-    margin-top:15px;
-}
-
-.cantidad-box span{
-    font-size:20px;
-    font-weight:700;
-    width:35px;
-    text-align:center;
-}
-
-.cantidad-box button{
-    width:40px;
-    height:40px;
-    border:none;
-    border-radius:50%;
-    background:#eee;
-    color:#333;
-    font-size:18px;
-    font-weight:bold;
-    cursor:pointer;
-    transition:.25s;
-}
-
-.cantidad-box button:hover{
-    background:#d4af37;
-    color:white;
-    transform:scale(1.08);
-}
-
-.btn-agregar{
-    width:100%;
-    margin-top:15px;
-    padding:14px;
-    border:1px solid #d4af37;
-    border-radius:14px;
-    background:#111;
-    color:white;
-    font-weight:700;
-    font-size:16px;
-    cursor:pointer;
-    transition:.3s;
-}
-
-.btn-agregar:hover{
-    background:#d4af37;
-    color:#111;
-    transform:translateY(-3px);
-}
-
-/* ===========================
-   CARRITO / PEDIDO
-=========================== */
-.pedido{
-    position:sticky;
-    top:20px;
-    background:white;
-    padding:25px;
-    border-radius:25px;
-    box-shadow:0 10px 30px rgba(0,0,0,.08);
-    border-top:4px solid #d4af37;
-}
-
-.pedido h2{
-    margin-bottom:15px;
-    font-size:24px;
-}
-
-#listaPedido{
-    list-style:none;
-}
-
-.item-pedido{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    margin-bottom:10px;
-    padding-bottom:10px;
-    border-bottom:1px solid #eee;
-}
-
-.btn-eliminar{
-    border:none;
-    background:#ffebee;
-    color:#d32f2f;
-    width:32px;
-    height:32px;
-    border-radius:50%;
-    cursor:pointer;
-    transition:.3s;
-    font-size:14px;
-}
-
-.btn-eliminar:hover{
-    background:#d32f2f;
-    color:white;
-}
-
-.pedido p{
-    margin-top:8px;
-    font-size:16px;
-}
-
-.btn-wsp{
-    display:block;
-    width:100%;
-    text-align:center;
-    background:#25D366;
-    color:white;
-    text-decoration:none;
-    padding:15px;
-    border-radius:10px;
-    margin-top:20px;
-    font-weight:bold;
-    transition:.3s;
-}
-
-.btn-wsp:hover{
-    background:#1ebe5b;
-}
-
-/* ===========================
-   RESPONSIVE / MOBILE
-=========================== */
-@media(max-width:900px){
-    .container{
-        grid-template-columns:1fr;
-    }
-
-    .pedido{
-        position:static;
-        order:2;
-    }
-}
-
-@media(max-width:600px){
-    .header h1{
-        font-size:30px;
-    }
-
-    .header p{
-        font-size:15px;
-    }
-
-    .grupo-filtros{
-        display:grid;
-        grid-template-columns:repeat(2,1fr);
-        gap:12px;
-        width:100%;
-    }
-
-    .grupo-filtros button{
-        min-width:100%;
-        font-size:16px;
-        height:58px;
-    }
-
-    #productos{
-        grid-template-columns:1fr 1fr;
-        gap:14px;
-    }
-
-    .card img{
-        height:160px;
-    }
-
-    .info h3{
-        font-size:16px;
-        min-height:40px;
-    }
-
-    .precio{
-        font-size:20px;
-    }
-
-    .container{
-        padding:0 12px 30px;
-    }
-}
-
-@media(max-width:380px){
-    #productos{
-        grid-template-columns:1fr;
-    }
-}
+<script src="script.js"></script>
+</body>
+</html>
