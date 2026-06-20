@@ -14,7 +14,12 @@ const logos = {
 let productosGlobal = [];
 let pedido = [];
 let cantidades = {};
-let botonActivo = null;
+let botonActivoCategoria = null;
+let botonActivoPublico = null;
+
+let filtroCategoria = null;
+let filtroPublico = null;
+let filtroTexto = "";
 
 const contenedorProductos = document.getElementById("productos");
 contenedorProductos.innerHTML = `<p class="estado-info">Cargando productos...</p>`;
@@ -29,14 +34,44 @@ fetch(API)
     contenedorProductos.innerHTML = `<p class="estado-info">No se pudieron cargar los productos. Intenta recargar la página.</p>`;
 });
 
-function marcarActivo(boton){
-    if(botonActivo) botonActivo.classList.remove("activo");
+function marcarActivo(grupo, boton){
+    const actual = grupo === "categoria" ? botonActivoCategoria : botonActivoPublico;
+    if(actual) actual.classList.remove("activo");
+
     if(boton){
         boton.classList.add("activo");
-        botonActivo = boton;
-    }else{
-        botonActivo = null;
     }
+
+    if(grupo === "categoria"){
+        botonActivoCategoria = boton || null;
+    }else{
+        botonActivoPublico = boton || null;
+    }
+}
+
+// Aplica TODOS los filtros activos a la vez (categoría + público + búsqueda)
+function aplicarFiltros(){
+    let resultado = productosGlobal;
+
+    if(filtroCategoria){
+        resultado = resultado.filter(p =>
+            (p.CATEGORIA || "").trim().toLowerCase() === filtroCategoria.toLowerCase()
+        );
+    }
+
+    if(filtroPublico){
+        resultado = resultado.filter(p =>
+            (p.PUBLICO || "").trim().toLowerCase() === filtroPublico.toLowerCase()
+        );
+    }
+
+    if(filtroTexto){
+        resultado = resultado.filter(p =>
+            (p.PRODUCTO || "").toLowerCase().includes(filtroTexto)
+        );
+    }
+
+    mostrarProductos(resultado);
 }
 
 function cambiarLogo(categoria){
@@ -65,28 +100,26 @@ function filtrar(categoria){
 
 document.addEventListener("input", (e) => {
     if(e.target.id === "buscador"){
-        const texto = e.target.value.toLowerCase();
-        const filtrados = productosGlobal.filter(p =>
-            (p.PRODUCTO || "").toLowerCase().includes(texto)
-        );
-        mostrarProductos(filtrados);
+        filtroTexto = e.target.value.toLowerCase();
+        aplicarFiltros();
     }
 });
 
 function filtrarCategoria(cat, btn){
     cambiarLogo(cat);
-    marcarActivo(btn || (typeof event !== "undefined" ? event.currentTarget : null));
 
-    if(cat === "Todos"){
-        mostrarProductos(productosGlobal);
-        return;
+    const boton = btn || (typeof event !== "undefined" ? event.currentTarget : null);
+
+    // Si vuelve a tocar la misma categoría activa, la desactiva (muestra todas)
+    if(filtroCategoria === cat){
+        filtroCategoria = null;
+        marcarActivo("categoria", null);
+    }else{
+        filtroCategoria = cat;
+        marcarActivo("categoria", boton);
     }
 
-    const filtrados = productosGlobal.filter(p =>
-        (p.CATEGORIA || "").trim().toLowerCase() === cat.toLowerCase()
-    );
-
-    mostrarProductos(filtrados);
+    aplicarFiltros();
 }
 
 function agregar(nombre, precio, cantidad){
@@ -156,23 +189,21 @@ document.getElementById("overlayPedido").addEventListener("click", cerrarPedido)
 
 function filtrarPublico(publico, btn){
     const logo = document.getElementById("logoCategoria");
-    marcarActivo(btn || (typeof event !== "undefined" ? event.currentTarget : null));
+    const boton = btn || (typeof event !== "undefined" ? event.currentTarget : null);
 
     if(logos[publico]){
         logo.src = logos[publico];
     }
 
-    if(publico === "Todos"){
-        logo.src = LOGO_MEDIAS;
-        mostrarProductos(productosGlobal);
-        return;
+    if(filtroPublico === publico){
+        filtroPublico = null;
+        marcarActivo("publico", null);
+    }else{
+        filtroPublico = publico;
+        marcarActivo("publico", boton);
     }
 
-    const filtrados = productosGlobal.filter(p =>
-        (p.PUBLICO || "").trim().toLowerCase() === publico.toLowerCase()
-    );
-
-    mostrarProductos(filtrados);
+    aplicarFiltros();
 }
 
 function cambiarCantidad(id, cambio){
