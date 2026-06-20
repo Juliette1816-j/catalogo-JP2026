@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>JP Trend Store</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="style.css?v=4">
 <link rel="stylesheet"
 href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 </head>
@@ -33,13 +33,13 @@ placeholder="Buscar producto...">
 
 <button
 class="categoria-btn"
-onclick="filtrarCategoria('Medias')">
+onclick="filtrarCategoria('Medias', this)">
 🧦 Medias
 </button>
 
 <button
 class="categoria-btn"
-onclick="filtrarCategoria('Joyeria')">
+onclick="filtrarCategoria('Joyeria', this)">
 💎 Joyería
 </button>
 
@@ -49,31 +49,31 @@ onclick="filtrarCategoria('Joyeria')">
 
 <button
 class="mujer-btn"
-onclick="filtrarPublico('Mujer')">
+onclick="filtrarPublico('Mujer', this)">
 👩🏻‍🦰 Mujer
 </button>
 
 <button
 class="hombre-btn"
-onclick="filtrarPublico('Hombre')">
+onclick="filtrarPublico('Hombre', this)">
 🧑🏼‍🦱 Hombre
 </button>
 
 <button
 class="unisex-btn"
-onclick="filtrarPublico('Unisex')">
+onclick="filtrarPublico('Unisex', this)">
 ⚧️ Unisex
 </button>
 
 <button
 class="nino-btn"
-onclick="filtrarPublico('Niño')">
+onclick="filtrarPublico('Niño', this)">
 👦🏻 Niño
 </button>
 
 <button
 class="nina-btn"
-onclick="filtrarPublico('Niña')">
+onclick="filtrarPublico('Niña', this)">
 👧🏽 Niña
 </button>
 
@@ -104,6 +104,6 @@ onclick="filtrarPublico('Niña')">
     </aside>
 </main>
 
-<script src="script.js"></script>
+<script src="script.js?v=4"></script>
 </body>
 </html>
