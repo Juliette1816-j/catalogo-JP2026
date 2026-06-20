@@ -194,10 +194,6 @@ function mostrarProductos(datos){
                 <img src="${imagen}" alt="${p.PRODUCTO}" loading="lazy" onerror="this.src='https://via.placeholder.com/300?text=Sin+imagen'">
             </div>
             <div class="info">
-                <div class="tags">
-                    <span class="tag categoria">${p.CATEGORIA || ""}</span>
-                    <span class="tag publico">${p.PUBLICO || ""}</span>
-                </div>
                 <h3>${p.PRODUCTO || ""}</h3>
                 <div class="precio">${p["VALOR VENTA"] || ""}</div>
                 <div class="estado ${claseEstado}">${textoEstado}</div>
