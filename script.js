@@ -99,9 +99,8 @@ function agregar(nombre, precio, cantidad){
     }
 
     actualizarPedido();
+    abrirPedido();
 }
-
-function eliminarProducto(nombre){
     pedido = pedido.filter(p => p.nombre !== nombre);
     actualizarPedido();
 }
@@ -134,16 +133,26 @@ function actualizarPedido(){
 
     mensaje += `%0ATotal: $${totalValor.toLocaleString("es-CO")}`;
 
-    const link = `https://wa.me/573138368430?text=${mensaje}`;
-    document.getElementById("btnWhatsapp").href = link;
+    document.getElementById("btnWhatsapp").href = `https://wa.me/573138368430?text=${mensaje}`;
 
-    // Barra flotante (mobile)
-    const barra = document.getElementById("barraFlotante");
-    document.getElementById("totalItemsFloat").textContent = totalItems;
-    document.getElementById("totalValorFloat").textContent = totalValor.toLocaleString("es-CO");
-    document.getElementById("btnWhatsappFloat").href = link;
-    barra.style.display = totalItems > 0 ? "flex" : "none";
+    // Badge del carrito flotante
+    document.getElementById("badgeCarrito").textContent = totalItems;
 }
+
+// ---- Drawer del carrito ----
+function abrirPedido(){
+    document.getElementById("pedidoPanel").classList.add("abierto");
+    document.getElementById("overlayPedido").classList.add("visible");
+}
+
+function cerrarPedido(){
+    document.getElementById("pedidoPanel").classList.remove("abierto");
+    document.getElementById("overlayPedido").classList.remove("visible");
+}
+
+document.getElementById("btnCarritoFlotante").addEventListener("click", abrirPedido);
+document.getElementById("btnCerrarPedido").addEventListener("click", cerrarPedido);
+document.getElementById("overlayPedido").addEventListener("click", cerrarPedido);
 
 function filtrarPublico(publico, btn){
     const logo = document.getElementById("logoCategoria");
