@@ -245,119 +245,116 @@ function obtenerPrecio(valor){
 
 function mostrarProductos(datos){
 
-    const contenedor =
-    document.getElementById("productos");
+const contenedor =
+document.getElementById("productos");
 
-    contenedor.innerHTML = "";
+contenedor.innerHTML = "";
 
-    datos.forEach((p,i) => {
+datos.forEach((p,i) => {
 
-        if(!cantidades[i]){
-            cantidades[i] = 1;
-        }
+    const stock =
+    Number((p.STOCK || "0").trim());
 
-        let imagen =
-        p.IMAGENES
-        ? p.IMAGENES.split(",")[0].trim()
-        : "https://via.placeholder.com/300";
+    // No mostrar productos agotados
+    if(stock <= 0){
+        return;
+    }
 
-        const match =
-        imagen.match(/id=([^&]+)/);
+    if(!cantidades[i]){
+        cantidades[i] = 1;
+    }
 
-        if(match){
-            imagen =
-            `https://lh3.googleusercontent.com/d/${match[1]}`;
-        }
+    let imagen =
+    p.IMAGENES
+    ? p.IMAGENES.split(",")[0].trim()
+    : "https://via.placeholder.com/300";
 
-        const stock =
-        Number(p.STOCK || 0);
+    const match =
+    imagen.match(/id=([^&]+)/);
 
-        let claseEstado =
-        "disponible";
+    if(match){
+        imagen =
+        `https://lh3.googleusercontent.com/d/${match[1]}`;
+    }
 
-        let textoEstado =
-        "✦ Disponible";
+    let claseEstado =
+    "disponible";
 
-        if(stock <= 0){
+    let textoEstado =
+    "✦ Disponible";
 
-            claseEstado =
-            "agotado";
+    if(stock <= 5){
+        claseEstado =
+        "ultimas";
 
-            textoEstado =
-            "✖ Agotado";
+        textoEstado =
+        `✦ Últimas ${stock}`;
+    }
 
-        }else if(stock <= 5){
+    contenedor.innerHTML += `
 
-            claseEstado =
-            "ultimas";
+    <div class="card">
 
-            textoEstado =
-            `✦ Últimas ${stock}`;
-        }
+        <img
+        src="${imagen}"
+        alt="${p.PRODUCTO}">
 
-        contenedor.innerHTML += `
+        <div class="info">
 
-        <div class="card">
+            <div class="tags">
 
-            <img
-            src="${imagen}"
-            alt="${p.PRODUCTO}">
+                <span class="tag categoria">
+                    ${p.CATEGORIA || ""}
+                </span>
 
-            <div class="info">
+                <span class="tag publico">
+                    ${p.PUBLICO || ""}
+                </span>
 
-                <div class="tags">
+            </div>
 
-                    <span class="tag categoria">
-                        ${p.CATEGORIA}
-                    </span>
+            <h3>${p.PRODUCTO || ""}</h3>
 
-                    <span class="tag publico">
-                        ${p.PUBLICO}
-                    </span>
+            <div class="precio">
+                ${p["VALOR VENTA"] || ""}
+            </div>
 
-                </div>
+            <div class="estado ${claseEstado}">
+                ${textoEstado}
+            </div>
 
-                <h3>${p.PRODUCTO}</h3>
+            <div class="cantidad-box">
 
-                <div class="precio">
-                    ${p["VALOR VENTA"]}
-                </div>
+                <button onclick="cambiarCantidad(${i},-1)">
+                    -
+                </button>
 
-                <div class="estado ${claseEstado}">
-                    ${textoEstado}
-                </div>
+                <span id="cantidad-${i}">
+                    ${cantidades[i]}
+                </span>
 
-                <div class="cantidad-box">
-
-                    <button onclick="cambiarCantidad(${i},-1)">
-                        -
-                    </button>
-
-                    <span id="cantidad-${i}">
-                        ${cantidades[i]}
-                    </span>
-
-                    <button onclick="cambiarCantidad(${i},1)">
-                        +
-                    </button>
-
-                </div>
-
-                <button
-                class="btn-agregar"
-                onclick="agregar(
-                    '${(p.PRODUCTO || '').replace(/'/g,'\\\'')}',
-                    ${obtenerPrecio(p['VALOR VENTA'])},
-                    cantidades[${i}]
-                )">
-
-                    Agregar al pedido
-
+                <button onclick="cambiarCantidad(${i},1)">
+                    +
                 </button>
 
             </div>
 
+            <button
+            class="btn-agregar"
+            onclick="agregar(
+                '${(p.PRODUCTO || '').replace(/'/g, "\\'")}',
+                ${obtenerPrecio(p['VALOR VENTA'])},
+                cantidades[${i}]
+            )">
+
+                Agregar al pedido
+
+            </button>
+
         </div>
-        `;
-    });
+
+    </div>
+    `;
+});
+
 }
