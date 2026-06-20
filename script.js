@@ -14,13 +14,30 @@ const logos = {
 let productosGlobal = [];
 let pedido = [];
 let cantidades = {};
+let botonActivo = null;
+
+const contenedorProductos = document.getElementById("productos");
+contenedorProductos.innerHTML = `<p class="estado-info">Cargando productos...</p>`;
 
 fetch(API)
 .then(r => r.json())
 .then(datos => {
     productosGlobal = datos;
     mostrarProductos(datos);
+})
+.catch(() => {
+    contenedorProductos.innerHTML = `<p class="estado-info">No se pudieron cargar los productos. Intenta recargar la página.</p>`;
 });
+
+function marcarActivo(boton){
+    if(botonActivo) botonActivo.classList.remove("activo");
+    if(boton){
+        boton.classList.add("activo");
+        botonActivo = boton;
+    }else{
+        botonActivo = null;
+    }
+}
 
 function cambiarLogo(categoria){
     const logo = document.getElementById("logoCategoria");
@@ -56,8 +73,9 @@ document.addEventListener("input", (e) => {
     }
 });
 
-function filtrarCategoria(cat){
+function filtrarCategoria(cat, btn){
     cambiarLogo(cat);
+    marcarActivo(btn || (typeof event !== "undefined" ? event.currentTarget : null));
 
     if(cat === "Todos"){
         mostrarProductos(productosGlobal);
@@ -120,8 +138,9 @@ function actualizarPedido(){
         `https://wa.me/573138368430?text=${mensaje}`;
 }
 
-function filtrarPublico(publico){
+function filtrarPublico(publico, btn){
     const logo = document.getElementById("logoCategoria");
+    marcarActivo(btn || (typeof event !== "undefined" ? event.currentTarget : null));
 
     if(logos[publico]){
         logo.src = logos[publico];
@@ -158,6 +177,13 @@ function obtenerPrecio(valor){
 function mostrarProductos(datos){
     const contenedor = document.getElementById("productos");
     contenedor.innerHTML = "";
+
+    const visibles = datos.filter(p => Number((p.STOCK || "0").trim()) > 0);
+
+    if(visibles.length === 0){
+        contenedor.innerHTML = `<p class="estado-info">No se encontraron productos con ese criterio.</p>`;
+        return;
+    }
 
     datos.forEach((p,i) => {
         const stock = Number((p.STOCK || "0").trim());
