@@ -134,8 +134,15 @@ function actualizarPedido(){
 
     mensaje += `%0ATotal: $${totalValor.toLocaleString("es-CO")}`;
 
-    document.getElementById("btnWhatsapp").href =
-        `https://wa.me/573138368430?text=${mensaje}`;
+    const link = `https://wa.me/573138368430?text=${mensaje}`;
+    document.getElementById("btnWhatsapp").href = link;
+
+    // Barra flotante (mobile)
+    const barra = document.getElementById("barraFlotante");
+    document.getElementById("totalItemsFloat").textContent = totalItems;
+    document.getElementById("totalValorFloat").textContent = totalValor.toLocaleString("es-CO");
+    document.getElementById("btnWhatsappFloat").href = link;
+    barra.style.display = totalItems > 0 ? "flex" : "none";
 }
 
 function filtrarPublico(publico, btn){
