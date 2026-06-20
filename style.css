@@ -297,21 +297,32 @@ body{
 .btn-agregar{
     width:100%;
     margin-top:15px;
-    padding:14px;
-    border:1px solid #d4af37;
+    padding:13px;
+    border:1.5px solid #d4af37;
     border-radius:14px;
-    background:#111;
-    color:white;
-    font-weight:700;
-    font-size:16px;
+    background:transparent;
+    color:#9a7b1f;
+    font-weight:600;
+    font-size:15px;
+    font-family:'Cormorant Garamond', serif;
+    letter-spacing:.5px;
     cursor:pointer;
     transition:.3s;
 }
 
 .btn-agregar:hover{
     background:#d4af37;
-    color:#111;
-    transform:translateY(-3px);
+    color:white;
+    transform:translateY(-2px);
+}
+
+.estado-info{
+    grid-column:1/-1;
+    text-align:center;
+    padding:40px 20px;
+    color:#9a8c6f;
+    font-style:italic;
+    font-size:18px;
 }
 
 /* ===========================
