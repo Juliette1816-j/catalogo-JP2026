@@ -95,79 +95,51 @@ body{
 
 .grupo-filtros button{
     position:relative;
-    overflow:hidden;
-    isolation:isolate;
     min-width:clamp(110px, 30vw, 140px);
     height:clamp(42px, 10vw, 54px);
     padding:0 clamp(12px,3vw,20px);
-    border:2px solid #D4AF37;
+    border:1.5px solid rgba(212,175,55,.4);
     border-radius:40px;
-    background:white;
+    background:transparent;
     color:#222;
     font-size:clamp(14px, 3.5vw, 17px);
     font-weight:600;
     font-family:'Cormorant Garamond', serif;
     cursor:pointer;
-    transition:transform .3s, box-shadow .3s, color .3s;
-    box-shadow:0 4px 12px rgba(0,0,0,.06);
+    transition:border-color .3s, box-shadow .3s, transform .3s;
 }
 
-/* capa de color que se desliza al hacer hover/click */
-.grupo-filtros button::before{
-    content:"";
-    position:absolute;
-    inset:0;
-    left:-100%;
-    z-index:-1;
-    transition:left .35s ease;
-}
-
-.grupo-filtros button:hover{
-    transform:translateY(-3px);
-    color:white;
-    box-shadow:0 10px 22px rgba(212,175,55,.35);
-}
-
-.grupo-filtros button:hover::before{
-    left:0;
-}
-
+.grupo-filtros button:hover,
 .grupo-filtros button.activo{
-    color:white;
-}
-.grupo-filtros button.activo::before{
-    left:0;
-}
-
-/* colores por categoría */
-.categoria-btn{ border-color:#D4AF37; }
-.categoria-btn::before{
-    background:linear-gradient(135deg,#d4af37,#f7d86f);
+    transform:translateY(-2px);
+    border-color:#d4af37;
+    box-shadow:0 0 0 3px rgba(212,175,55,.15), 0 6px 16px rgba(212,175,55,.25);
 }
 
-.mujer-btn{ border-color:#e6b7c8; }
-.mujer-btn::before{
-    background:linear-gradient(135deg,#f8c7d8,#e68fb1);
+/* bordes pastel suaves por categoría al hover/activo */
+.mujer-btn:hover, .mujer-btn.activo{
+    border-color:#e68fb1;
+    box-shadow:0 0 0 3px rgba(230,143,177,.15), 0 6px 16px rgba(230,143,177,.25);
 }
 
-.hombre-btn{ border-color:#7aa7d8; }
-.hombre-btn::before{
-    background:linear-gradient(135deg,#7cb7ff,#3d7fe0);
+.hombre-btn:hover, .hombre-btn.activo{
+    border-color:#3d7fe0;
+    box-shadow:0 0 0 3px rgba(61,127,224,.15), 0 6px 16px rgba(61,127,224,.25);
 }
 
-.unisex-btn{ border-color:#a88edb; }
-.unisex-btn::before{
-    background:linear-gradient(135deg,#b89cff,#8468ff);
+.unisex-btn:hover, .unisex-btn.activo{
+    border-color:#8468ff;
+    box-shadow:0 0 0 3px rgba(132,104,255,.15), 0 6px 16px rgba(132,104,255,.25);
 }
 
-.nino-btn{ border-color:#6fcf97; }
-.nino-btn::before{
-    background:linear-gradient(135deg,#87ceeb,#4fa3d9);
+.nino-btn:hover, .nino-btn.activo{
+    border-color:#4fa3d9;
+    box-shadow:0 0 0 3px rgba(79,163,217,.15), 0 6px 16px rgba(79,163,217,.25);
 }
 
-.nina-btn{ border-color:#ffb6c1; }
-.nina-btn::before{
-    background:linear-gradient(135deg,#ffc0cb,#ff91a4);
+.nina-btn:hover, .nina-btn.activo{
+    border-color:#ff91a4;
+    box-shadow:0 0 0 3px rgba(255,145,164,.15), 0 6px 16px rgba(255,145,164,.25);
 }
 
 /* ===========================
@@ -196,6 +168,8 @@ body{
     overflow:hidden;
     box-shadow:0 3px 10px rgba(0,0,0,.08);
     transition:transform .35s, box-shadow .35s;
+    display:flex;
+    flex-direction:column;
 }
 
 .card:hover{
@@ -203,11 +177,20 @@ body{
     box-shadow:0 15px 30px rgba(212,175,55,.3);
 }
 
+.card .img-wrap{
+    width:100%;
+    aspect-ratio:1/1;
+    background:#faf7f0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    overflow:hidden;
+}
+
 .card img{
     width:100%;
-    height:260px;
-    object-fit:cover;
-    background:#fafafa;
+    height:100%;
+    object-fit:contain;
     display:block;
     transition:.35s;
 }
@@ -217,28 +200,32 @@ body{
 }
 
 .info{
-    padding:16px;
+    padding:14px;
+    display:flex;
+    flex-direction:column;
+    flex:1;
 }
 
 .tags{
     display:flex;
-    gap:8px;
-    margin-bottom:10px;
+    gap:6px;
+    margin-bottom:8px;
     flex-wrap:wrap;
 }
 
 .tag{
-    padding:5px 10px;
+    padding:4px 9px;
     border-radius:20px;
-    font-size:12px;
+    font-size:11px;
     font-weight:600;
     background:#f3efe7;
 }
 
 .info h3{
-    margin-bottom:10px;
-    min-height:50px;
-    font-size:clamp(15px, 4vw, 20px);
+    margin-bottom:8px;
+    min-height:auto;
+    line-height:1.25;
+    font-size:clamp(15px, 4vw, 19px);
     font-weight:700;
 }
 
@@ -419,10 +406,6 @@ body{
     #productos{
         grid-template-columns:1fr 1fr;
         gap:12px;
-    }
-
-    .card img{
-        height:140px;
     }
 
     .container{
