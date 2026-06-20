@@ -568,6 +568,22 @@ border-color:#6fcf97;
 border-color:#ffb6c1;
 }
 
+.grupo-filtros button:hover::before,
+.grupo-filtros button:hover::after{
+animation: brillo 1s infinite alternate;
+}
+
+@keyframes brillo{
+from{
+opacity:.5;
+transform:scale(1);
+}
+to{
+opacity:1;
+transform:scale(1.3);
+}
+}
+
 /* MOBILE */
 
 @media(max-width:900px){
