@@ -22,29 +22,49 @@ body{
     flex-direction:column;
     align-items:center;
     background:white;
-    padding:clamp(14px,4vw,25px) 20px;
+    padding:clamp(18px,4vw,30px) 20px;
     text-align:center;
     border-radius:0 0 25px 25px;
     box-shadow:0 5px 20px rgba(0,0,0,.08);
 }
 
 .header .logo{
-    width:clamp(70px, 18vw, 110px);
-    margin-bottom:10px;
+    width:clamp(64px, 16vw, 90px);
+    margin-bottom:12px;
     border-radius:50%;
+    border:2px solid #d4af37;
+    padding:3px;
+    box-shadow:0 4px 14px rgba(212,175,55,.25);
 }
 
 .header h1{
-    font-size:clamp(26px, 6vw, 42px);
+    font-size:clamp(24px, 5.5vw, 38px);
     font-weight:700;
-    letter-spacing:1px;
+    letter-spacing:2px;
+    text-transform:uppercase;
+    color:#3a2e1f;
     margin:0;
+    position:relative;
+    padding-bottom:10px;
+}
+
+.header h1::after{
+    content:"";
+    position:absolute;
+    bottom:0;
+    left:50%;
+    transform:translateX(-50%);
+    width:60px;
+    height:2px;
+    background:linear-gradient(90deg, transparent, #d4af37, transparent);
 }
 
 .header p{
-    margin-top:8px;
-    color:#777;
-    font-size:clamp(14px, 3vw, 18px);
+    margin-top:10px;
+    color:#9a8c6f;
+    font-size:clamp(13px, 3vw, 17px);
+    font-style:italic;
+    letter-spacing:.5px;
 }
 
 /* ===========================
@@ -404,7 +424,6 @@ body{
         padding:18px;
     }
 }
-
 
 @media(max-width:380px){
     #productos{
