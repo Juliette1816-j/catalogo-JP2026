@@ -190,7 +190,9 @@ function mostrarProductos(datos){
 
         contenedor.innerHTML += `
         <div class="card">
-            <img src="${imagen}" alt="${p.PRODUCTO}">
+            <div class="img-wrap">
+                <img src="${imagen}" alt="${p.PRODUCTO}" loading="lazy" onerror="this.src='https://via.placeholder.com/300?text=Sin+imagen'">
+            </div>
             <div class="info">
                 <div class="tags">
                     <span class="tag categoria">${p.CATEGORIA || ""}</span>
