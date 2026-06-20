@@ -101,6 +101,7 @@ function agregar(nombre, precio, cantidad){
     actualizarPedido();
     abrirPedido();
 }
+function eliminarProducto(nombre){
     pedido = pedido.filter(p => p.nombre !== nombre);
     actualizarPedido();
 }
